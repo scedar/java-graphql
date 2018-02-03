@@ -1,4 +1,4 @@
-package com.howtographql.hackernews.graphql.security;
+package com.howtographql.hackernews.graphql.utils.security;
 
 public class AccessTokenGenerator extends ScedarUUID {
     public static String getAccessToken(){

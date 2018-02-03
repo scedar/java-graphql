@@ -1,4 +1,4 @@
-package com.howtographql.hackernews.graphql.security;
+package com.howtographql.hackernews.graphql.utils.security;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

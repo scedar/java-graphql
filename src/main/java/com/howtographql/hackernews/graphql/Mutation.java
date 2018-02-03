@@ -20,16 +20,13 @@ public class Mutation implements GraphQLRootResolver {
      */
     final LinkResolver linkResolver;
     final UserResolver userResolver;
-    final AuthResolver authResolver;
 
     //The Mutation constructor with all resolvers
     public Mutation(
             LinkResolver linkResolver,
-            UserResolver userResolver,
-            AuthResolver authResolver) {
+            UserResolver userResolver) {
         this.linkResolver = linkResolver;
         this.userResolver = userResolver;
-        this.authResolver = authResolver;
     }
 
     /**
@@ -40,18 +37,14 @@ public class Mutation implements GraphQLRootResolver {
     }
 
     public User createUser(CreateUserInput createUserInput){
-        return userResolver.createUser(createUserInput);
-    }
 
-    public AuthPayload authenticateUser(AuthInput authInput)
-            throws IllegalAccessException{
-        User user = userResolver.findByEmail(authInput.getEmail());
-        if (user.getPassword().equals(authInput.getPassword())){
+        User user = userResolver.createUser(createUserInput);
 
-            return new AuthPayload(new AccessToken(user.getId()), user);
+        if(user == null){
+            throw new GraphQLException("Error! User exists");
         }
 
-        throw new GraphQLException("Invalid credentials");
+        return user;
     }
 
 }

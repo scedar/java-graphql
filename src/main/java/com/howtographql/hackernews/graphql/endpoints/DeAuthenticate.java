@@ -1,7 +1,6 @@
 package com.howtographql.hackernews.graphql.endpoints;
 
 import com.howtographql.hackernews.graphql.messages.SystemMessage;
-import com.howtographql.hackernews.graphql.payloads.AccessToken;
 import com.howtographql.hackernews.graphql.resolvers.AuthResolver;
 import com.howtographql.hackernews.graphql.utils.http.HttpUtils;
 import com.howtographql.hackernews.graphql.utils.http.ScedarHttpServlet;
@@ -10,13 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/refresh/token")
-public class RefreshAccessToken extends ScedarHttpServlet {
+@WebServlet(urlPatterns = "/de-auth")
+public class DeAuthenticate extends ScedarHttpServlet {
 
     @Override
     protected void doPost(
             HttpServletRequest request,
-            HttpServletResponse response) {
+            HttpServletResponse response){
 
         String authorizationHeader = request.getHeader("Authorization");
 
@@ -31,23 +30,17 @@ public class RefreshAccessToken extends ScedarHttpServlet {
         } else {
 
             String accessTokenString = authorizationHeader.replace("Bearer ", "");
-            AccessToken accessToken = new AuthResolver().validateAccessToken(accessTokenString, true);
+            new AuthResolver().deAuthorizeAccessToken(accessTokenString);
 
-            if (accessToken == null) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            HttpUtils.sendAsJson(response, new SystemMessage(
+                    SystemMessage.DE_AUTHENTICATION_SUCCESS,
+                    "Access token was successfully de-authorized"
+            ));
 
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                HttpUtils.sendAsJson(response, new SystemMessage(
-                        SystemMessage.AUTHORIZATION_FAILURE,
-                        "Invalid/Corrupt/Expired access token"
-                ));
-            } else {
-
-                response.setStatus(HttpServletResponse.SC_OK);
-                HttpUtils.sendAsJson(response, accessToken);
-
-            }
 
         }
+
     }
 
 }

@@ -8,14 +8,11 @@ import com.howtographql.hackernews.graphql.Schema;
 import com.howtographql.hackernews.graphql.messages.SystemMessage;
 import com.howtographql.hackernews.graphql.payloads.AccessToken;
 import com.howtographql.hackernews.graphql.resolvers.AuthResolver;
-import com.howtographql.hackernews.graphql.security.AuthContext;
-import com.howtographql.hackernews.graphql.utils.HttpUtils;
-import graphql.GraphQLException;
+import com.howtographql.hackernews.graphql.utils.security.AuthContext;
+import com.howtographql.hackernews.graphql.utils.http.HttpUtils;
 import graphql.servlet.GraphQLContext;
 import graphql.servlet.SimpleGraphQLServlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Optional;
 
 
@@ -29,6 +26,8 @@ public class GraphQL extends SimpleGraphQLServlet {
     @Override
     protected GraphQLContext createContext(Optional<HttpServletRequest> request,
                                            Optional<HttpServletResponse> response) {
+
+        AccessToken accessToken = null;
 
         if (request.isPresent() && response.isPresent()) {
 
@@ -44,10 +43,12 @@ public class GraphQL extends SimpleGraphQLServlet {
                         "No Authorization header"
                 ));
 
+                return null;
+
             } else {
 
                 String accessTokenString = authorizationHeader.replace("Bearer ", "");
-                AccessToken accessToken = new AuthResolver().validateAccessToken(accessTokenString);
+                accessToken = new AuthResolver().validateAccessToken(accessTokenString);
 
                 if(accessToken == null){
 
@@ -56,18 +57,16 @@ public class GraphQL extends SimpleGraphQLServlet {
                             SystemMessage.AUTHORIZATION_FAILURE,
                             "Invalid/Corrupt/Expired access token"
                     ));
+
+                    return null;
+
                 }else{
-//                    httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-//                    HttpUtils.sendAsJson(httpServletResponse, accessToken);
                     return new AuthContext(accessToken, request, response);
                 }
-
-                return null;
             }
         } else {
             return null;
         }
-        return null;
     }
 
 }

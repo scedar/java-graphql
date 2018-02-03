@@ -42,9 +42,7 @@ public class AccessTokenRepository {
             if(rs.next()){
 
                 if(deletePrevious){
-                    QueryDatabase.updateDatabase("" +
-                            "DELETE FROM access_token " +
-                            " WHERE access_token = '"+accessToken+"'");
+                    deleteAccessToken(accessToken);
                     deletePrevious = false;
 
                     return new AccessToken(
@@ -70,11 +68,21 @@ public class AccessTokenRepository {
         return validateAccessToken(accessToken);
     }
 
+    public void deAuthorizeAccessToken(String accessToken){
+        deleteAccessToken(accessToken);
+    }
+
     public boolean markTokenAsExpired(String accessToken, String userId){
         return QueryDatabase.updateDatabase("" +
                 "UPDATE access_token SET expired = '1'" +
                 " WHERE access_token = '"+accessToken+"'" +
                 " AND user_id = '"+userId+"'");
+    }
+
+    private void deleteAccessToken(String accessToken){
+        QueryDatabase.updateDatabase("" +
+                "DELETE FROM access_token " +
+                " WHERE access_token = '"+accessToken+"'");
     }
 
 }
