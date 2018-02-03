@@ -1,22 +1,19 @@
 package com.howtographql.hackernews.graphql.endpoints;
 
-import com.google.gson.Gson;
 import com.howtographql.hackernews.domain.User;
 import com.howtographql.hackernews.graphql.inputs.AuthInput;
 import com.howtographql.hackernews.graphql.messages.SystemMessage;
 import com.howtographql.hackernews.graphql.payloads.AccessToken;
 import com.howtographql.hackernews.graphql.repositories.UserRepository;
-import com.howtographql.hackernews.graphql.utils.HttpUtils;
+import com.howtographql.hackernews.graphql.utils.http.HttpUtils;
+import com.howtographql.hackernews.graphql.utils.http.ScedarHttpServlet;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 
 @WebServlet(urlPatterns = "/auth")
-public class Authenticate extends ScedarHttpServlet{
+public class Authenticate extends ScedarHttpServlet {
 
     @Override
     protected void doPost(

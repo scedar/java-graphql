@@ -15,23 +15,6 @@ input CreateLinkInput {
     postedBy: String!
 }
 
-input AuthInput{
-    email: String!
-    password: String!
-}
-
-type AccessToken{
-    message: String!
-    accessToken: String!
-    type: String!
-    expiry: String!
-}
-
-type AuthPayload{
-    accessToken: AccessToken!
-    user: User!
-}
-
 type Link {
     id: String!
     url: String!
@@ -49,7 +32,6 @@ type User {
 type Mutation {
     createUser(input: CreateUserInput!): User
     createLink(input: CreateLinkInput!): Link
-    authenticateUser(input: AuthInput!): AuthPayload
 }
 
 type Query {

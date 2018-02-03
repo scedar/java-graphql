@@ -2,7 +2,7 @@ package com.howtographql.hackernews.graphql.payloads;
 
 import com.howtographql.hackernews.graphql.repositories.AccessTokenRepository;
 import com.howtographql.hackernews.graphql.resolvers.AuthResolver;
-import com.howtographql.hackernews.graphql.security.AccessTokenGenerator;
+import com.howtographql.hackernews.graphql.utils.security.AccessTokenGenerator;
 
 public class AccessToken {
 

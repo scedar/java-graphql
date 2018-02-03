@@ -3,6 +3,7 @@ package com.howtographql.hackernews.graphql.repositories;
 import com.howtographql.hackernews.domain.db.QueryDatabase;
 import com.howtographql.hackernews.domain.User;
 import com.howtographql.hackernews.graphql.inputs.CreateUserInput;
+import graphql.GraphQLException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,13 +68,18 @@ public class UserRepository {
     }
 
     public User saveUser(CreateUserInput createUserInput) {
-        QueryDatabase.updateDatabase("" +
-                "INSERT INTO users (email, name, password)" +
-                " VALUES (" +
-                " '"+createUserInput.getEmail()+"'," +
-                " '"+createUserInput.getName()+"'," +
-                " '"+createUserInput.getPassword()+"')");
-        return findById(QueryDatabase.getInsertId());
+       try {
+           QueryDatabase.updateDatabase("" +
+                   "INSERT INTO users (email, name, password)" +
+                   " VALUES (" +
+                   " '"+createUserInput.getEmail()+"'," +
+                   " '"+createUserInput.getName()+"'," +
+                   " '"+createUserInput.getPassword()+"')");
+           return findById(QueryDatabase.getInsertId());
+       }catch (Exception e){
+           e.printStackTrace();
+           return null;
+       }
     }
 
 }

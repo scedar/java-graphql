@@ -1,4 +1,4 @@
-package com.howtographql.hackernews.graphql.utils;
+package com.howtographql.hackernews.graphql.utils.http;
 
 import com.google.gson.Gson;
 

@@ -27,4 +27,8 @@ public class AuthResolver implements GraphQLResolver<AuthPayload> {
         return accessTokenRepository.validateAccessToken(accessToken, deletePrevious);
     }
 
+    public void deAuthorizeAccessToken(String accessToken){
+        accessTokenRepository.deAuthorizeAccessToken(accessToken);
+    }
+
 }

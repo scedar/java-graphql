@@ -1,6 +1,5 @@
-package com.howtographql.hackernews.graphql.security;
+package com.howtographql.hackernews.graphql.utils.security;
 
-import com.howtographql.hackernews.domain.User;
 import com.howtographql.hackernews.graphql.payloads.AccessToken;
 import graphql.servlet.GraphQLContext;
 

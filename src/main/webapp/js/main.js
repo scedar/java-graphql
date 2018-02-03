@@ -39,7 +39,7 @@
         var ajaxConfig = {
             loader: 'submit',
             async: true,
-            url: 'http://localhost:8080/auth',
+            url: 'http://localhost:8101/auth',
             method: 'POST',
             dataType: 'json',
             data: {

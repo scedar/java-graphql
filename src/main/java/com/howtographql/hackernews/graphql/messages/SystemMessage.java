@@ -1,11 +1,14 @@
 package com.howtographql.hackernews.graphql.messages;
 
-import com.howtographql.hackernews.graphql.security.ScedarUUID;
+import com.howtographql.hackernews.graphql.utils.security.ScedarUUID;
 
 public class SystemMessage {
 
     public static String AUTHENTICATION_FAILURE = "E100X:Authentication failed.";
     public static String AUTHENTICATION_SUCCESS = "S100X: Authentication successful";
+
+    public static String DE_AUTHENTICATION_SUCCESS = "S105X: De-Authentication successful";
+    public static String DE_AUTHENTICATION_FAILURE = "E105X: De-Authentication failed";
 
     public static String AUTHORIZATION_FAILURE = "E103X:Authorization failed.";
     public static String AUTHORIZATION_SUCCESS = "S103X: Authorization successful";

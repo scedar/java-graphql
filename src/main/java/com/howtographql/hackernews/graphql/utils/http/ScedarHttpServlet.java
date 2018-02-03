@@ -1,8 +1,7 @@
-package com.howtographql.hackernews.graphql.endpoints;
+package com.howtographql.hackernews.graphql.utils.http;
 
 import com.google.gson.Gson;
 import com.howtographql.hackernews.graphql.messages.SystemMessage;
-import com.howtographql.hackernews.graphql.utils.HttpUtils;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

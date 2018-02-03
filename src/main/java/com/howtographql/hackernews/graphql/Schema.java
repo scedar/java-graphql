@@ -12,7 +12,6 @@ public class Schema {
 
         LinkResolver linkResolver = new LinkResolver();
         UserResolver userResolver = new UserResolver();
-        AuthResolver authResolver = new AuthResolver();
 
         return SchemaParser.newParser()
                 .file("schema.graphqls")
@@ -23,10 +22,8 @@ public class Schema {
                         ),
                         new Mutation(
                                 linkResolver,
-                                userResolver,
-                                authResolver
-                        ),
-                        new AuthResolver()
+                                userResolver
+                        )
                 )
                 .build()
                 .makeExecutableSchema();
