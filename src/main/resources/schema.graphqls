@@ -1,0 +1,67 @@
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+input CreateUserInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input CreateLinkInput {
+    url: String!
+    description: String!
+    postedBy: String!
+}
+
+input AuthInput{
+    email: String!
+    password: String!
+}
+
+type AccessToken{
+    message: String!
+    accessToken: String!
+    type: String!
+    expiry: String!
+}
+
+type AuthPayload{
+    accessToken: AccessToken!
+    user: User!
+}
+
+type Link {
+    id: String!
+    url: String!
+    description: String!
+    postedBy: User!
+}
+
+type User {
+    id: String!
+    name: String!
+    email: String!
+    password: String!
+}
+
+type Mutation {
+    createUser(input: CreateUserInput!): User
+    createLink(input: CreateLinkInput!): Link
+    authenticateUser(input: AuthInput!): AuthPayload
+}
+
+type Query {
+    allLinks: [Link]
+    link(id: String!): Link
+
+    allUsers: [User]
+    user(id: String!): User
+    userByEmail(email: String!): User
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}
